@@ -18,47 +18,47 @@ namespace TencentCloud\Databuddy\V20260715\Models;
 use TencentCloud\Common\AbstractModel;
 
 /**
- * 内嵌工作流任务简要信息（目前只有 FOR_EACH 工作流任务该字段才有值）
+ * 控制台角色信息（对外标准版，与内部 Role 解耦）
  *
- * @method string getTaskId() 获取任务ID
+ * @method RoleBasicInfo getBasicInfo() 获取角色基本信息
 注意：此字段可能返回 null，表示取不到有效值。
- * @method void setTaskId(string $TaskId) 设置任务ID
+ * @method void setBasicInfo(RoleBasicInfo $BasicInfo) 设置角色基本信息
 注意：此字段可能返回 null，表示取不到有效值。
- * @method string getTaskName() 获取任务名称
+ * @method RoleMetaData getMetaData() 获取角色元信息
 注意：此字段可能返回 null，表示取不到有效值。
- * @method void setTaskName(string $TaskName) 设置任务名称
+ * @method void setMetaData(RoleMetaData $MetaData) 设置角色元信息
 注意：此字段可能返回 null，表示取不到有效值。
- * @method string getTaskTypeName() 获取任务类型名称，请参考数据结构TaskType中TaskTypeName字段描述
+ * @method array getPermissions() 获取角色权限
 注意：此字段可能返回 null，表示取不到有效值。
- * @method void setTaskTypeName(string $TaskTypeName) 设置任务类型名称，请参考数据结构TaskType中TaskTypeName字段描述
+ * @method void setPermissions(array $Permissions) 设置角色权限
 注意：此字段可能返回 null，表示取不到有效值。
  */
-class InnerWorkflowTaskBrief extends AbstractModel
+class ConsoleRoleInfo extends AbstractModel
 {
     /**
-     * @var string 任务ID
+     * @var RoleBasicInfo 角色基本信息
 注意：此字段可能返回 null，表示取不到有效值。
      */
-    public $TaskId;
+    public $BasicInfo;
 
     /**
-     * @var string 任务名称
+     * @var RoleMetaData 角色元信息
 注意：此字段可能返回 null，表示取不到有效值。
      */
-    public $TaskName;
+    public $MetaData;
 
     /**
-     * @var string 任务类型名称，请参考数据结构TaskType中TaskTypeName字段描述
+     * @var array 角色权限
 注意：此字段可能返回 null，表示取不到有效值。
      */
-    public $TaskTypeName;
+    public $Permissions;
 
     /**
-     * @param string $TaskId 任务ID
+     * @param RoleBasicInfo $BasicInfo 角色基本信息
 注意：此字段可能返回 null，表示取不到有效值。
-     * @param string $TaskName 任务名称
+     * @param RoleMetaData $MetaData 角色元信息
 注意：此字段可能返回 null，表示取不到有效值。
-     * @param string $TaskTypeName 任务类型名称，请参考数据结构TaskType中TaskTypeName字段描述
+     * @param array $Permissions 角色权限
 注意：此字段可能返回 null，表示取不到有效值。
      */
     function __construct()
@@ -74,16 +74,23 @@ class InnerWorkflowTaskBrief extends AbstractModel
         if ($param === null) {
             return;
         }
-        if (array_key_exists("TaskId",$param) and $param["TaskId"] !== null) {
-            $this->TaskId = $param["TaskId"];
+        if (array_key_exists("BasicInfo",$param) and $param["BasicInfo"] !== null) {
+            $this->BasicInfo = new RoleBasicInfo();
+            $this->BasicInfo->deserialize($param["BasicInfo"]);
         }
 
-        if (array_key_exists("TaskName",$param) and $param["TaskName"] !== null) {
-            $this->TaskName = $param["TaskName"];
+        if (array_key_exists("MetaData",$param) and $param["MetaData"] !== null) {
+            $this->MetaData = new RoleMetaData();
+            $this->MetaData->deserialize($param["MetaData"]);
         }
 
-        if (array_key_exists("TaskTypeName",$param) and $param["TaskTypeName"] !== null) {
-            $this->TaskTypeName = $param["TaskTypeName"];
+        if (array_key_exists("Permissions",$param) and $param["Permissions"] !== null) {
+            $this->Permissions = [];
+            foreach ($param["Permissions"] as $key => $value){
+                $obj = new RolePermission();
+                $obj->deserialize($value);
+                array_push($this->Permissions, $obj);
+            }
         }
     }
 }
